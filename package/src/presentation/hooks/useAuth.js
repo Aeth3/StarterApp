@@ -3,7 +3,7 @@ import { saveSession } from "../../domain/usecases/SaveSession";
 import { signInWithPassword } from "../../domain/usecases/SignInWithPassword";
 import { signOut } from "../../domain/usecases/SignOut";
 import { useGlobal } from "../../../context/context";
-
+import config from "../../../config.json"
 export const useAuth = () => {
   const { setAuth, setLoading } = useGlobal();
 
@@ -36,7 +36,6 @@ export const useAuth = () => {
     const login = async (email, password) => {
         try {
             setLoading(true);
-            console.log("API base url:", API_BASE_URL);
 
             // Save tokens and user session
             await saveSession({

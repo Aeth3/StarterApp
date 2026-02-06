@@ -1,12 +1,12 @@
 import React, { useState } from "react"
 import { View, Text, TextInput, TouchableOpacity, StyleSheet } from "react-native"
-import config from "../../auth-components/SignUp/config.json"
+import config from "../../config.json"
 import Screen from "../layout/Screen"
 import CustomModal from "./Modal"
 
 export default function SignUp({ handleSignUp = () => { }, handleHaveAccount, loading, modalInfo, handleConfirm }) {
     const [formData, setFormData] = useState(
-        config.SignUpFields.reduce((acc, field) => ({ ...acc, [field.name]: "" }), {})
+        config.signUpConfig.SignUpFields.reduce((acc, field) => ({ ...acc, [field.name]: "" }), {})
     )
     const [errors, setErrors] = useState({}) // track which fields are missing
 
@@ -17,7 +17,7 @@ export default function SignUp({ handleSignUp = () => { }, handleHaveAccount, lo
 
     const onSignUp = () => {
         const newErrors = {}
-        config.SignUpFields.forEach(field => {
+        config.signUpConfig.SignUpFields.forEach(field => {
             if (field.required && !formData[field.name]?.trim()) {
                 newErrors[field.name] = true
             }
@@ -41,7 +41,7 @@ export default function SignUp({ handleSignUp = () => { }, handleHaveAccount, lo
 
             {/* Dynamic form */}
             <View style={styles.form}>
-                {config.SignUpFields.map((field, index) => (
+                {config.signUpConfig.SignUpFields.map((field, index) => (
                     <View key={index}>
                         <TextInput
                             style={[
