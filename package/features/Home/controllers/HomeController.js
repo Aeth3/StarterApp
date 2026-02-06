@@ -10,7 +10,6 @@ import SwipeRenderer from "../../../components/SwipeRenderer";
 import { useTheme } from "../../../theme/Theme";
 import { useGlobal } from "../../../context/context";
 import { useActionHandlers } from "../../../global/actionHandlers";
-import { useAuth } from "../../../hooks/useAuth";
 
 const secondaryIconsMap = {
     faHome,

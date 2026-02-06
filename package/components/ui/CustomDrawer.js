@@ -7,7 +7,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { faChevronDown, faChevronUp, faRightFromBracket } from "@fortawesome/free-solid-svg-icons";
 import { useNavigationState } from '@react-navigation/native';
 import ProfileHeader from "./ProfileHeader";
-import { useAuth } from "package/hooks/useAuth";
 import CustomModal from "./Modal";
 import { COLORS } from "../../app/constants/theme"
 

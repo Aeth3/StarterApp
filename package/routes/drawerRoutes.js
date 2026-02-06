@@ -4,7 +4,7 @@ import HomeScreen from "../features/Home/HomeScreen";
 import MenuScreen from "../features/Menu/MenuScreen";
 import LeafletMap from "../components/ui/LeafletMap";
 import { StackNavigator } from "../navigators/AppNavigator";
-import Entry from "package/auth-components/Home/Entry";
+import Entry from "../src/presentation/auth/Home/Entry";
 
 export const drawerRoutes = [
     // {

@@ -7,7 +7,7 @@ import Button from "../app/components/Button/Button"
 import { useActionHandlers } from "../global/actionHandlers";
 import { upsertHouseholds } from "../lib/dbHelper";
 import { useDashboardController } from "../features/Dashboard/controllers/DashboardController"
-import { useAuth } from "../hooks/useAuth";
+import { useAuth } from "../src/presentation/hooks/useAuth";
 
 const Drawer = createDrawerNavigator();
 

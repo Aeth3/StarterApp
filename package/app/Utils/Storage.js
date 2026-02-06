@@ -1,39 +1,41 @@
-import AsyncStorage from '@react-native-async-storage/async-storage';
-// import { AsyncStorage } from 'react-native';
+import { asyncStorageAdapter as storage } from "../../src/infra/storage/asyncStorageAdapter";
 
 async function get(key, defaultValue = null) {
   try {
-    let value = await AsyncStorage.getItem(key);
+    let value = await storage.getItem(key);
 
     if (value !== null) {
       value = JSON.parse(value);
     }
-    // console.log('data ' + value);
-    return value;
+
+    return value ?? defaultValue;
   } catch (error) {
-    // Error retrieving data
-    console.log('Could not save data: ' + key, error);
+    console.log("Could not read data: " + key, error);
+    return defaultValue;
   }
 }
+
 async function set(key, value) {
   try {
-    return await AsyncStorage.setItem(key, JSON.stringify(value));
+    return await storage.setItem(key, JSON.stringify(value));
   } catch (error) {
-    // Error saving data
-    console.log('Could not save data: ' + key, error);
+    console.log("Could not save data: " + key, error);
   }
-  // return success;
 }
-async function remove(key) {}
+
+async function remove(key) {
+  try {
+    return await storage.removeItem(key);
+  } catch (error) {
+    console.log("Could not remove data: " + key, error);
+  }
+}
 
 async function clear() {
   try {
-    return await AsyncStorage.clear(() => {
-      console.log('cleared');
-    });
+    return await storage.clear();
   } catch (error) {
-    // Error saving data
-    console.log('Could not clear data ', error);
+    console.log("Could not clear data", error);
   }
 }
 

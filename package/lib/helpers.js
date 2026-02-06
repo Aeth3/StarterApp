@@ -1,6 +1,6 @@
 import { Buffer } from "buffer"; // Import Buffer
 import { ActivityIndicator, Alert, Platform, StyleSheet, Text, View } from "react-native";
-import { useAuth } from "../auth/AuthContext";
+
 import { COLORS } from "../app/constants/theme";
 import Snackbar from "react-native-snackbar";
 import AsyncStorage from "@react-native-async-storage/async-storage";

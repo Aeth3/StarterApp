@@ -1,6 +1,6 @@
-import LoginScreen from "../auth-components/Login/LoginScreen";
-import SignUpScreen from "../auth-components/SignUp/SignUpScreen";
 
+import SignUpScreen from "../src/presentation/auth/SignUp/SignUpScreen";
+import LoginScreen from "../src/presentation/auth/Login/LoginScreen";
 
 export const authRoutes = [
     {

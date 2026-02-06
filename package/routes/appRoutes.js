@@ -1,5 +1,5 @@
 import LeafletMap from "../components/ui/LeafletMap";
-import Entry from "../auth-components/Home/Entry";
+import Entry from "../src/presentation/auth/Home/Entry"
 
 
 

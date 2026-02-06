@@ -1,65 +1,62 @@
-import AsyncStorage from "@react-native-async-storage/async-storage"
+import { asyncStorageAdapter as storage } from "../src/infra/storage/asyncStorageAdapter";
 
 /**
- * Save a value to AsyncStorage
- * @param {string} key - The key to store data under
- * @param {any} value - The value to save (will be stringified)
+ * Save a value to storage
+ * @param {string} key
+ * @param {any} value
  */
 export const saveData = async (key, value) => {
   try {
-    const jsonValue = JSON.stringify(value)
-    await AsyncStorage.setItem(key, jsonValue)
-    // console.log(`[Storage] Saved ${key}`)
+    const jsonValue = JSON.stringify(value);
+    await storage.setItem(key, jsonValue);
   } catch (error) {
-    console.error(`[Storage] Error saving ${key}:`, error)
+    console.error(`[Storage] Error saving ${key}:`, error);
   }
-}
+};
 
 /**
- * Retrieve a value from AsyncStorage
- * @param {string} key - The key to fetch data from
- * @returns {Promise<any|null>} - Parsed object or null if not found
+ * Retrieve a value from storage
+ * @param {string} key
+ * @returns {Promise<any|null>}
  */
 export const getData = async (key) => {
   try {
-    const jsonValue = await AsyncStorage.getItem(key)
-    return jsonValue != null ? JSON.parse(jsonValue) : null
+    const jsonValue = await storage.getItem(key);
+    return jsonValue != null ? JSON.parse(jsonValue) : null;
   } catch (error) {
-    console.error(`[Storage] Error getting ${key}:`, error)
-    return null
+    console.error(`[Storage] Error getting ${key}:`, error);
+    return null;
   }
-}
+};
 
 /**
- * Remove a specific key from AsyncStorage
+ * Remove a specific key from storage
  * @param {string} key
  */
 export const removeData = async (key) => {
   try {
-    await AsyncStorage.removeItem(key)
-    // console.log(`[Storage] Removed ${key}`)
+    await storage.removeItem(key);
   } catch (error) {
-    console.error(`[Storage] Error removing ${key}:`, error)
+    console.error(`[Storage] Error removing ${key}:`, error);
   }
-}
+};
 
 /**
- * Clear all data in AsyncStorage
+ * Clear all data in storage
  */
 export const clearStorage = async () => {
   try {
-    await AsyncStorage.clear()
-    // console.log("[Storage] Cleared all data")
+    await storage.clear();
   } catch (error) {
-    console.error("[Storage] Error clearing storage:", error)
+    console.error("[Storage] Error clearing storage:", error);
   }
-}
+};
 
-// SAVE 
+// SAVE
 export const saveItem = async (key, value) => {
   try {
-    const storedValue = typeof value === 'object' ? JSON.stringify(value) : value;
-    await AsyncStorage.setItem(key, storedValue);
+    const storedValue = typeof value === "object" ? JSON.stringify(value) : value;
+    await storage.setItem(key, storedValue);
   } catch (error) {
     console.error("Error saving item:", error);
   }
@@ -67,7 +64,7 @@ export const saveItem = async (key, value) => {
 
 export const saveAuthToken = async (token) => {
   try {
-    await AsyncStorage.setItem("authToken", token);
+    await storage.setItem("authToken", token);
   } catch (error) {
     console.error("Error saving token:", error);
   }
@@ -75,7 +72,7 @@ export const saveAuthToken = async (token) => {
 
 export const saveBarangayId = async (id) => {
   try {
-    await AsyncStorage.setItem("barangayId", id);
+    await storage.setItem("barangayId", id);
   } catch (error) {
     console.error("Error saving token:", error);
   }
@@ -83,7 +80,7 @@ export const saveBarangayId = async (id) => {
 
 export const saveUsername = async (username) => {
   try {
-    await AsyncStorage.setItem("username", username);
+    await storage.setItem("username", username);
   } catch (error) {
     console.error("Error saving token:", error);
   }
@@ -91,32 +88,27 @@ export const saveUsername = async (username) => {
 
 export const saveQuestionnaires = async (questions) => {
   try {
-    await AsyncStorage.setItem("questions", JSON.stringify(questions));
+    await storage.setItem("questions", JSON.stringify(questions));
   } catch (error) {
     console.error("Error saving token:", error);
   }
 };
 
 // FETCH
-
 export const getItem = async (key) => {
   try {
-    const value = await AsyncStorage.getItem(key);
-
-    if (!value) return null; // Return null if no value is found
+    const value = await storage.getItem(key);
+    if (!value) return null;
 
     try {
       const parsedValue = JSON.parse(value);
-
-      // Ensure the parsed value is an object or an array
       if (typeof parsedValue === "object" && parsedValue !== null) {
         return parsedValue;
       }
     } catch (error) {
-      // console.warn(`Stored value for key "${key}" is not valid JSON.`);
+      // stored value is not JSON
     }
 
-    // If parsing fails, return the raw value as a string
     return value;
   } catch (error) {
     console.error("Error retrieving item:", error);
@@ -124,10 +116,9 @@ export const getItem = async (key) => {
   }
 };
 
-
 export const getAuthToken = async () => {
   try {
-    return await AsyncStorage.getItem("authToken");
+    return await storage.getItem("authToken");
   } catch (error) {
     console.error("Error retrieving token:", error);
     return null;
@@ -136,7 +127,7 @@ export const getAuthToken = async () => {
 
 export const getBarangayId = async () => {
   try {
-    return await AsyncStorage.getItem("barangayId");
+    return await storage.getItem("barangayId");
   } catch (error) {
     console.error("Error retrieving token:", error);
     return null;
@@ -145,7 +136,7 @@ export const getBarangayId = async () => {
 
 export const getUsername = async () => {
   try {
-    return await AsyncStorage.getItem("username");
+    return await storage.getItem("username");
   } catch (error) {
     console.error("Error retrieving token:", error);
     return null;
@@ -154,8 +145,8 @@ export const getUsername = async () => {
 
 export const getQuestionnaires = async () => {
   try {
-    const storedData = await AsyncStorage.getItem("questions");
-    return storedData ? JSON.parse(storedData) : null; // Parse only if data exists
+    const storedData = await storage.getItem("questions");
+    return storedData ? JSON.parse(storedData) : null;
   } catch (error) {
     console.error("Error retrieving token:", error);
     return null;
@@ -165,9 +156,8 @@ export const getQuestionnaires = async () => {
 // REMOVE
 export const removeAuthToken = async () => {
   try {
-    await AsyncStorage.removeItem("authToken");
+    await storage.removeItem("authToken");
   } catch (error) {
     console.error("Error removing token:", error);
   }
 };
-

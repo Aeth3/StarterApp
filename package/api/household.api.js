@@ -1,4 +1,4 @@
-import apiClient from "../lib/apiClient";
+import apiClient from "../src/infra/http/apiClient";
 
 export const HouseholdAPI = {
     getAll: (payload = {}) =>
