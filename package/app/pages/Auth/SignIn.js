@@ -28,8 +28,6 @@ const SignIn = ({
     handleConfirm = () => { },
     config
 }) => {
-    console.log("config", config);
-
     const [formData, setFormData] = useState(
         config.LoginFields.reduce((acc, field) => ({ ...acc, [field.name]: '' }), {})
     );
