@@ -1,9 +1,14 @@
 import { getCurrentUser } from "../src/composition/authSession";
 
-
 export default async function fetchUser() {
-    const { data: { user } } = await getCurrentUser();
-    console.log("got user", user);
+  const result = await getCurrentUser();
+  if (!result?.ok) {
+    console.log("failed to get user", result?.error?.message);
+    return null;
+  }
 
-    return user
+  const user = result.value;
+  console.log("got user", user);
+
+  return user;
 }

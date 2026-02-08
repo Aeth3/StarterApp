@@ -6,14 +6,16 @@ import {
 
 export const signin = async (formData) => {
   try {
-    const { data, error } = await signInWithPassword({
+    const result = await signInWithPassword({
       email: formData.email,
       password: formData.password,
     });
-    if (error) throw error;
+    if (!result?.ok) {
+      throw new Error(result?.error?.message || "Login failed");
+    }
 
-    console.log("SUCCESS:", data);
-    return { success: true, data };
+    console.log("SUCCESS:", result.value);
+    return { success: true, data: result.value };
   } catch (error) {
     console.log("FAILED:", error.message);
     return { success: false, error: error.message };
@@ -22,17 +24,19 @@ export const signin = async (formData) => {
 
 export const signup = async ({ email, password, first_name, last_name }) => {
   try {
-    const { data, error } = await signUpUsecase({
+    const result = await signUpUsecase({
       email,
       password,
       first_name,
       last_name,
     });
 
-    if (error) throw error;
+    if (!result?.ok) {
+      throw new Error(result?.error?.message || "Sign up failed");
+    }
 
-    console.log("SUCCESS:", data);
-    return { success: true, data };
+    console.log("SUCCESS:", result.value);
+    return { success: true, data: result.value };
   } catch (error) {
     console.log("FAILED:", error.message);
     return { success: false, error: error.message };
@@ -41,10 +45,14 @@ export const signup = async ({ email, password, first_name, last_name }) => {
 
 export const signout = async () => {
   try {
-    const { error } = await signOutUsecase();
-    if (error) throw error;
-    return { error };
+    const result = await signOutUsecase();
+    if (!result?.ok) {
+      throw new Error(result?.error?.message || "Sign out failed");
+    }
+
+    return { success: true };
   } catch (error) {
     console.error("Logout failed:", error.message);
+    return { success: false, error: error.message };
   }
 };

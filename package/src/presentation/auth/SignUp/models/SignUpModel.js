@@ -7,14 +7,18 @@ export const postSignUp = async ({
   last_name,
 }) => {
   try {
-    const { data, error } = await signUp({
+    const result = await signUp({
       email,
       password,
       first_name,
       last_name,
     });
-    if (error) throw error;
-    return { success: true, data };
+
+    if (!result?.ok) {
+      throw new Error(result?.error?.message || "Sign up failed");
+    }
+
+    return { success: true, data: result.value };
   } catch (error) {
     return { success: false, error: error.message || "Sign up failed" };
   }

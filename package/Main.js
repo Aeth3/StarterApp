@@ -1,9 +1,18 @@
-
-import { ThemedText, useTheme } from "./theme/Theme";
+import { useEffect } from "react";
 import { ContextProvider } from './context/context'
 import RootNavigator from "./navigators/RootNavigator"
+import {
+    disposeOfflineSync,
+    initializeOfflineSync,
+} from "./src/infra/http/offlineSync";
 export default function Main() {
-    const { colors } = useTheme()
+    useEffect(() => {
+        initializeOfflineSync();
+        return () => {
+            disposeOfflineSync();
+        };
+    }, []);
+
     return <ContextProvider>
         <RootNavigator />
     </ContextProvider>

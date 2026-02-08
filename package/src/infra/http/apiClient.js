@@ -1,6 +1,11 @@
 import axios from "axios";
 import { API_BASE_URL, API_TIMEOUT } from "@env";
-import { getAccessToken } from "../../composition/authSession";
+
+let accessTokenProvider = async () => null;
+
+export const setAccessTokenProvider = (provider) => {
+  accessTokenProvider = typeof provider === "function" ? provider : async () => null;
+};
 
 const apiClient = axios.create({
   baseURL: API_BASE_URL,
@@ -12,7 +17,7 @@ const apiClient = axios.create({
 
 apiClient.interceptors.request.use(
   async (config) => {
-    const token = await getAccessToken();
+    const token = await accessTokenProvider();
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }

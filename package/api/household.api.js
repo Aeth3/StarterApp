@@ -1,15 +1,39 @@
-import apiClient from "../src/infra/http/apiClient";
+import { requestOfflineFirst } from "../src/infra/http/offlineHttp";
 
 export const HouseholdAPI = {
-    getAll: (payload = {}) =>
-        apiClient.post("/api/sample-endpoint", payload),
+  getAll: (payload = {}) =>
+    requestOfflineFirst({
+      method: "POST",
+      url: "/api/sample-endpoint",
+      data: payload,
+    }, {
+      treatAsRead: true,
+      queueOfflineWrites: false,
+    }),
 
-    getById: (id) => apiClient.get(`/households/${id}`),
+  getById: (id) =>
+    requestOfflineFirst({
+      method: "GET",
+      url: `/households/${id}`,
+    }),
 
-    create: (payload) => apiClient.post("/households", payload),
+  create: (payload) =>
+    requestOfflineFirst({
+      method: "POST",
+      url: "/households",
+      data: payload,
+    }),
 
-    update: (id, payload) =>
-        apiClient.put(`/households/${id}`, payload),
+  update: (id, payload) =>
+    requestOfflineFirst({
+      method: "PUT",
+      url: `/households/${id}`,
+      data: payload,
+    }),
 
-    remove: (id) => apiClient.delete(`/households/${id}`),
+  remove: (id) =>
+    requestOfflineFirst({
+      method: "DELETE",
+      url: `/households/${id}`,
+    }),
 };

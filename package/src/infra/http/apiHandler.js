@@ -1,6 +1,5 @@
 import Toast from "react-native-root-toast";
 import axios from "axios";
-import { clearSession } from "../../composition/authSession";
 
 /**
  * Unified API request handler
@@ -13,6 +12,8 @@ export const handleApiRequest = async (apiCall, options = {}) => {
     showError = true,
     errorMessage = "Something went wrong. Please try again.",
     autoLogout = true,
+    clearSessionAction,
+    onUnauthorized,
   } = options;
 
   try {
@@ -27,7 +28,12 @@ export const handleApiRequest = async (apiCall, options = {}) => {
             duration: Toast.durations.LONG,
             position: Toast.positions.BOTTOM,
           });
-          await clearSession();
+          if (typeof clearSessionAction === "function") {
+            await clearSessionAction();
+          }
+          if (typeof onUnauthorized === "function") {
+            onUnauthorized();
+          }
         }
         throw new Error("Invalid token");
       }
@@ -48,7 +54,12 @@ export const handleApiRequest = async (apiCall, options = {}) => {
           duration: Toast.durations.LONG,
           position: Toast.positions.BOTTOM,
         });
-        await clearSession();
+        if (typeof clearSessionAction === "function") {
+          await clearSessionAction();
+        }
+        if (typeof onUnauthorized === "function") {
+          onUnauthorized();
+        }
       }
       throw new Error("Unauthorized");
     }
@@ -70,8 +81,12 @@ export const handleApiRequest = async (apiCall, options = {}) => {
           duration: Toast.durations.LONG,
           position: Toast.positions.BOTTOM,
         });
-        await clearSession();
-        navigate("LoginScreen");
+        if (typeof clearSessionAction === "function") {
+          await clearSessionAction();
+        }
+        if (typeof onUnauthorized === "function") {
+          onUnauthorized();
+        }
         return;
       }
 

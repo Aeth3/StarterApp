@@ -1,5 +1,7 @@
 import config from "../../../config.json";
 import { AuthRepository } from "../../domain/repositories/AuthRepository";
+import { createSession } from "../../domain/entities/Session";
+import { createUser } from "../../domain/entities/User";
 
 const DEFAULT_USER = {
   id: "demo-user-id",
@@ -10,50 +12,52 @@ const DEFAULT_USER = {
   },
 };
 
-const buildMockSession = (user) => ({
-  access_token: `demo_access_${Date.now()}`,
-  refresh_token: `demo_refresh_${Date.now()}`,
-  user,
-});
+const mapToDomainUser = (user) =>
+  createUser({
+    id: user.id,
+    email: user.email,
+    first_name: user?.raw_user_meta_data?.first_name || "",
+    last_name: user?.raw_user_meta_data?.last_name || "",
+    raw_user_meta_data: user?.raw_user_meta_data || {},
+  });
+
+const buildMockSession = (user) =>
+  createSession({
+    access_token: `demo_access_${Date.now()}`,
+    refresh_token: `demo_refresh_${Date.now()}`,
+    user,
+  });
 
 export class AuthRepositoryMockImpl extends AuthRepository {
   constructor() {
     super();
-    this.currentUser = config?.user_data || DEFAULT_USER;
+    this.currentUser = mapToDomainUser(config?.user_data || DEFAULT_USER);
   }
 
   async signInWithPassword({ email, password }) {
     if (!email || !password) {
-      return {
-        data: null,
-        error: { message: "Email and password are required" },
-      };
+      throw new Error("Email and password are required");
     }
 
-    const user = {
+    const rawUser = {
       ...(config?.user_data || DEFAULT_USER),
       email,
     };
+    const user = mapToDomainUser(rawUser);
     this.currentUser = user;
 
     return {
-      data: {
-        user,
-        session: buildMockSession(user),
-      },
-      error: null,
+      user,
+      session: buildMockSession(user),
     };
   }
 
   async signUp({ email, password, first_name, last_name }) {
     if (!email || !password) {
-      return {
-        data: null,
-        error: { message: "Email and password are required" },
-      };
+      throw new Error("Email and password are required");
     }
 
-    const user = {
+    const rawUser = {
       ...(config?.user_data || DEFAULT_USER),
       id: `demo_${Date.now()}`,
       email,
@@ -62,29 +66,21 @@ export class AuthRepositoryMockImpl extends AuthRepository {
         last_name: last_name || "User",
       },
     };
+    const user = mapToDomainUser(rawUser);
     this.currentUser = user;
 
     return {
-      data: {
-        user,
-        session: buildMockSession(user),
-      },
-      error: null,
+      user,
+      session: buildMockSession(user),
     };
   }
 
   async signOut() {
     this.currentUser = null;
-    return { error: null };
   }
 
   async getCurrentUser() {
-    return {
-      data: {
-        user: this.currentUser,
-      },
-      error: null,
-    };
+    return this.currentUser;
   }
 }
 

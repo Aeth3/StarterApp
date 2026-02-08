@@ -1,3 +1,9 @@
 export const makeSaveSession = ({ sessionRepository }) => {
-  return (session) => sessionRepository.saveSession(session);
+  return (session) => {
+    if (!session || typeof session !== "object") {
+      throw new Error("Session payload is required");
+    }
+
+    return sessionRepository.saveSession(session);
+  };
 };
