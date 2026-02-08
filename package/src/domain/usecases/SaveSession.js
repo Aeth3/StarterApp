@@ -1,3 +1,3 @@
-import { sessionRepository } from "../../data/repositories/SessionRepositoryImpl";
-
-export const saveSession = (session) => sessionRepository.saveSession(session);
+export const makeSaveSession = ({ sessionRepository }) => {
+  return (session) => sessionRepository.saveSession(session);
+};

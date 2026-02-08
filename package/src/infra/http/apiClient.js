@@ -1,6 +1,6 @@
 import axios from "axios";
 import { API_BASE_URL, API_TIMEOUT } from "@env";
-import { getAccessToken } from "../../domain/usecases/GetAccessToken";
+import { getAccessToken } from "../../composition/authSession";
 
 const apiClient = axios.create({
   baseURL: API_BASE_URL,

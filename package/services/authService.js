@@ -1,6 +1,8 @@
-import { signInWithPassword } from "../src/domain/usecases/SignInWithPassword";
-import { signUp as signUpUsecase } from "../src/domain/usecases/SignUp";
-import { signOut as signOutUsecase } from "../src/domain/usecases/SignOut";
+import {
+  signInWithPassword,
+  signOut as signOutUsecase,
+  signUp as signUpUsecase,
+} from "../src/composition/authSession";
 
 export const signin = async (formData) => {
   try {

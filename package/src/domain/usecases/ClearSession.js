@@ -1,4 +1,3 @@
-import { sessionRepository } from "../../data/repositories/SessionRepositoryImpl";
-
-export const clearSession = () => sessionRepository.clearSession();
-
+export const makeClearSession = ({ sessionRepository }) => {
+  return () => sessionRepository.clearSession();
+};

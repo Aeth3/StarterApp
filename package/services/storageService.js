@@ -1,8 +1,13 @@
-import { sessionRepository } from "../src/data/repositories/SessionRepositoryImpl";
+import {
+  clearSession as clearSessionUseCase,
+  getAccessToken,
+  getSession as getSessionUseCase,
+  saveSession as saveSessionUseCase,
+} from "../src/composition/authSession";
 
 export const saveSession = async (session) => {
   try {
-    await sessionRepository.saveSession(session);
+    await saveSessionUseCase(session);
   } catch (error) {
     console.error("Error saving session:", error);
   }
@@ -10,7 +15,7 @@ export const saveSession = async (session) => {
 
 export const getSession = async () => {
   try {
-    return await sessionRepository.getSession();
+    return await getSessionUseCase();
   } catch (error) {
     console.error("Error loading session:", error);
     return null;
@@ -19,7 +24,7 @@ export const getSession = async () => {
 
 export const getSessionToken = async () => {
   try {
-    return await sessionRepository.getAccessToken();
+    return await getAccessToken();
   } catch (error) {
     console.error("Error getting token", error);
     return null;
@@ -28,7 +33,7 @@ export const getSessionToken = async () => {
 
 export const clearSession = async () => {
   try {
-    await sessionRepository.clearSession();
+    await clearSessionUseCase();
   } catch (error) {
     console.error("Error clearing session:", error);
   }

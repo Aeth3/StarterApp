@@ -3,28 +3,36 @@ import renderer from "react-test-renderer";
 import DynamicRenderer from "../package/components/DynamicRenderer";
 
 describe("DynamicRenderer", () => {
-    it("renders fallback for unknown type", () => {
-        const tree = renderer.create(
+    const renderJson = async (element) => {
+        let instance;
+        await renderer.act(async () => {
+            instance = renderer.create(element);
+        });
+        return instance.toJSON();
+    };
+
+    it("renders fallback for unknown type", async () => {
+        const tree = await renderJson(
             <DynamicRenderer item={{ type: "unknown" }} config={{}} />
-        ).toJSON();
+        );
 
         expect(tree).toBeTruthy();
         expect(tree.type).toBe("Text");
     });
 
-    it("renders fallback for invalid item", () => {
-        const tree = renderer.create(
+    it("renders fallback for invalid item", async () => {
+        const tree = await renderJson(
             <DynamicRenderer item={null} config={{}} />
-        ).toJSON();
+        );
 
         expect(tree).toBeTruthy();
         expect(tree.type).toBe("Text");
     });
 
-    it("renders fallback for invalid config", () => {
-        const tree = renderer.create(
+    it("renders fallback for invalid config", async () => {
+        const tree = await renderJson(
             <DynamicRenderer item={{ type: "stories" }} config={{ stories: "bad" }} />
-        ).toJSON();
+        );
 
         expect(tree).toBeTruthy();
         expect(tree.type).toBe("Text");

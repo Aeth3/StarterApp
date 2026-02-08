@@ -1,6 +1,7 @@
 import { supabase } from "../../../lib/supabase";
+import { AuthRepository } from "../../domain/repositories/AuthRepository";
 
-export class AuthRepositoryImpl {
+export class AuthRepositoryImpl extends AuthRepository {
   async signInWithPassword({ email, password }) {
     return supabase.auth.signInWithPassword({ email, password });
   }
@@ -20,6 +21,10 @@ export class AuthRepositoryImpl {
 
   async signOut() {
     return supabase.auth.signOut();
+  }
+
+  async getCurrentUser() {
+    return supabase.auth.getUser();
   }
 }
 

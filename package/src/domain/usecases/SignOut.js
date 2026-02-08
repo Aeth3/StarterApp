@@ -1,3 +1,3 @@
-import { authRepository } from "../../data/repositories/AuthRepositoryImpl";
-
-export const signOut = () => authRepository.signOut();
+export const makeSignOut = ({ authRepository }) => {
+  return () => authRepository.signOut();
+};

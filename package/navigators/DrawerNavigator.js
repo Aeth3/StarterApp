@@ -1,12 +1,10 @@
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import { drawerRoutes } from "../routes/drawerRoutes";
 import CustomDrawer from "../components/ui/CustomDrawer";
-import { Text, TouchableOpacity, View } from "react-native";
+import { View } from "react-native";
 import { COLORS } from "../app/constants/theme";
 import Button from "../app/components/Button/Button"
 import { useActionHandlers } from "../global/actionHandlers";
-import { upsertHouseholds } from "../lib/dbHelper";
-import { useDashboardController } from "../features/Dashboard/controllers/DashboardController"
 import { useAuth } from "../src/presentation/hooks/useAuth";
 
 const Drawer = createDrawerNavigator();

@@ -1,8 +1,9 @@
 import { asyncStorageAdapter } from "../../infra/storage/asyncStorageAdapter";
+import { SessionRepository } from "../../domain/repositories/SessionRepository";
 
 const SESSION_KEY = "user_session";
 
-export class SessionRepositoryImpl {
+export class SessionRepositoryImpl extends SessionRepository {
   async saveSession(session) {
     const payload = JSON.stringify(session);
     await asyncStorageAdapter.setItem(SESSION_KEY, payload);

@@ -1,3 +1,3 @@
-import { sessionRepository } from "../../data/repositories/SessionRepositoryImpl";
-
-export const getSession = () => sessionRepository.getSession();
+export const makeGetSession = ({ sessionRepository }) => {
+  return () => sessionRepository.getSession();
+};

@@ -1,8 +1,21 @@
 /**
- * AuthRepository interface (documentation-only).
- * Implementations should provide these async methods:
- * - signInWithPassword({ email, password })
- * - signUp({ email, password, first_name, last_name })
- * - signOut()
+ * Domain contract for auth operations.
+ * Outer layers must provide a concrete implementation.
  */
-export class AuthRepository {}
+export class AuthRepository {
+  async signInWithPassword(_credentials) {
+    throw new Error("AuthRepository.signInWithPassword() not implemented");
+  }
+
+  async signUp(_payload) {
+    throw new Error("AuthRepository.signUp() not implemented");
+  }
+
+  async signOut() {
+    throw new Error("AuthRepository.signOut() not implemented");
+  }
+
+  async getCurrentUser() {
+    throw new Error("AuthRepository.getCurrentUser() not implemented");
+  }
+}

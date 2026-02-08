@@ -1,6 +1,6 @@
 import Toast from "react-native-root-toast";
 import axios from "axios";
-import { clearSession } from "../../domain/usecases/ClearSession";
+import { clearSession } from "../../composition/authSession";
 
 /**
  * Unified API request handler
