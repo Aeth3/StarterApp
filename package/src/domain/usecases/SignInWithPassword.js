@@ -1,5 +1,5 @@
 import { createEmail } from "../entities/Email";
-import { fail, ok } from "../shared/result";
+import { fail, ok } from "../repositories/shared/result";
 
 export const makeSignInWithPassword = ({ authRepository }) => {
   return async ({ email, password }) => {

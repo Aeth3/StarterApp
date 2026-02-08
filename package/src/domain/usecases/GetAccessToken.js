@@ -1,4 +1,4 @@
-import { ok, fail } from "../shared/result";
+import { ok, fail } from "../repositories/shared/result";
 
 export const makeGetAccessToken = ({ sessionRepository }) => {
   return async () => {

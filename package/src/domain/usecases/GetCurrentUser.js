@@ -1,4 +1,4 @@
-import { fail, ok } from "../shared/result";
+import { fail, ok } from "../repositories/shared/result";
 
 export const makeGetCurrentUser = ({ authRepository }) => {
   return async () => {

@@ -1,4 +1,4 @@
-import { fail, ok } from "../shared/result";
+import { fail, ok } from "../repositories/shared/result";
 
 export const makeClearSession = ({ sessionRepository }) => {
   return async () => {

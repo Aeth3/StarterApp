@@ -15,7 +15,8 @@ export const saveSession = async (session) => {
 
 export const getSession = async () => {
   try {
-    return await getSessionUseCase();
+    const result = await getSessionUseCase();
+    return result?.ok ? result.value : null;
   } catch (error) {
     console.error("Error loading session:", error);
     return null;
